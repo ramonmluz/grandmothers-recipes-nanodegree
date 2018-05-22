@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Grandmother\'s Recipes App</string>
+
+    <!-- Constantes Uteis -->
+    <string name="date_format">dd/MM/yyyy</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+
+</resources>
