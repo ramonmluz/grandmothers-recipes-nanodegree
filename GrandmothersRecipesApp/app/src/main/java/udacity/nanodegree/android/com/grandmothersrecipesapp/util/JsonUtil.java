@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,22 +23,18 @@ public class JsonUtil {
     public static Gson getGson() {
 
         if( gson == null){
-            gson = new GsonBuilder()
-                    .setDateFormat(Resources.getSystem().getString(R.string.date_format))
-                    .create();
+            gson = new Gson();
         }
         return gson;
-
     }
 
     public static HashMap<String, Object> parseJson(Object src) {
-        String jsonString = JsonUtil.getGson().toJson(src);
+        String jsonString = getGson().toJson(src);
 
-        return new Gson().fromJson(jsonString, new TypeToken<HashMap<String,Object>>() {}.getType());
+        return  getGson().fromJson(jsonString, new TypeToken<HashMap<String,Object>>() {}.getType());
     }
 
-    public static List<Recipe> parseJsonX(Object src) {
-        String jsonString = JsonUtil.getGson().toJson(src);
-        return new Gson().fromJson(jsonString, new TypeToken <List<Recipe>>() {}.getType());
+    public static List<Recipe> parseJsonList(String jsonString) {
+        return getGson().fromJson(jsonString, new TypeToken <List<Recipe>>() {}.getType());
     }
 }

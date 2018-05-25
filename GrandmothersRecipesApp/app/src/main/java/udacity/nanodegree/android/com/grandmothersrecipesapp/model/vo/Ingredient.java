@@ -8,15 +8,15 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Ingredient {
-    protected int quantity;
+    protected Double quantity;
     protected String measure;
     protected String ingredient;
 
-    public int getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 

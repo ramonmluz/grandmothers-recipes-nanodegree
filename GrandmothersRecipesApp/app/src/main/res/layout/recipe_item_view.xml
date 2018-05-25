@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/cardViewContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="148dp"
+    card_view:cardCornerRadius="4dp"
+    android:layout_marginBottom="16dp"
+    >
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="148dp"
-        card_view:cardCornerRadius="4dp">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
+        <TextView
+            android:id="@+id/nameRecipeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:textColor="@color/colorNameRecipe"
+            android:textSize="32sp"
+            tools:text="Tilte Recipe" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:textSize="32sp"
-                android:textColor="@color/colorNameRecipe"
-                tools:text="Tilte Recipe" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_recipe" />
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_recipe" />
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
