@@ -5,15 +5,14 @@ import org.parceler.Parcel;
 /**
  * Created by ramon on 19/05/18.
  */
-
 @Parcel
 public class Step {
-
     protected int id;
     protected String shortDescription;
     protected String description;
     protected String videoURL;
     protected String thumbnailURL;
+    protected Recipe recipe;
 
     public int getId() {
         return id;

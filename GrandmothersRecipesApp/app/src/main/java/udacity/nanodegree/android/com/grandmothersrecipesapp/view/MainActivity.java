@@ -1,13 +1,17 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.widget.BaseAdapter;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -31,10 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
     @ViewById
     RecyclerView recyclerView;
+
+    @ViewById
+    View progress;
+
+    @ViewById
+    View areaErro;
+
+    @ViewById
+    TextView textMsgErroView;
+
     private  List<Recipe> recipes;
+
+
 
     @AfterViews
      void init(){
+        textMsgErroView.setText(getString(R.string.erro_listar_receitas));
         updateRecipes();
         initRecyclerView();
     }
@@ -46,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateRecipes() {
+         showView(progress);
         recipeBO.RequestMovieVolley(new ApiCallBack() {
             @Override
             public void onSuccess(Object response) {
@@ -59,22 +77,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        updateRecipes();
-        super.onResume();
+    void showView(View view){
+        recyclerView.setVisibility(View.GONE);
+        progress.setVisibility(View.GONE);
+        areaErro.setVisibility(View.GONE);
+
+        if(view != null){
+            view.setVisibility(View.VISIBLE);
+        }
     }
 
+//    @Override
+//    protected void onResume() {
+//        updateRecipes();
+//        super.onResume();
+//    }
+
     @UiThread
-    void showList(List<Recipe> recipes){
+    protected void showList(List<Recipe> recipes){
+        showView(recyclerView);
         this.recipes = recipes;
         recipeAdapter.setItems(recipes);
         recipeAdapter.notifyDataSetChanged();
     }
 
     @UiThread
-    void showError(String error){
-
+   protected void showError(String error){
+        showView(areaErro);
     }
 
+  @Click(R.id.areaErro)
+  protected void reloadRecipes(){
+      updateRecipes();
+  }
 }

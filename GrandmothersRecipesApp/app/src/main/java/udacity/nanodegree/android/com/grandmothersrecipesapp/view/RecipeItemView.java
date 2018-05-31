@@ -1,14 +1,20 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.ContentProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
@@ -17,10 +23,10 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 /**
  * Created by ramon on 20/05/18.
  */
-@EViewGroup(R.layout.recipe_item_view)
-public class RecipeItemView extends RelativeLayout {
+@EViewGroup(R.layout.view_recipe_item)
+public class RecipeItemView extends FrameLayout {
 
-    @ViewById
+     @ViewById
     protected CardView cardViewContainer;
 
     @ViewById
@@ -50,10 +56,13 @@ public class RecipeItemView extends RelativeLayout {
         }
     }
 
-    @Click
-    void cardViewContainer(){
-
+    @Click(R.id.cardViewContainer)
+    void showRecipeDetail() {
+        RecipeDetailActivity_.intent(getContext())
+                .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .recipe((Recipe) nameRecipeTxt.getTag())
+                .isDetailFragment(true)
+                .start();
     }
-
 
 }

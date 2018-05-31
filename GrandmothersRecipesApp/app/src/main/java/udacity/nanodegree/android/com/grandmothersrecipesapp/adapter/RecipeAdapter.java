@@ -1,5 +1,6 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.adapter;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.ViewGroup;
 

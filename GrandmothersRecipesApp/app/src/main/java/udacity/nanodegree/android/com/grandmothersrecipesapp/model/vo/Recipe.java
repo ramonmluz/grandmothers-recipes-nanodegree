@@ -10,12 +10,10 @@ import java.util.List;
 
 @Parcel
 public class Recipe {
-
     protected int id;
     protected int servings;
     protected String name;
     protected String image;
-
     protected List<Ingredient> ingredients;
     protected List<Step> steps;
 

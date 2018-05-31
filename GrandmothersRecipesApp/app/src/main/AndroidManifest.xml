@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.RecipeDetailActivity_"/>
+
         <receiver android:name=".provider.GrandmothesWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

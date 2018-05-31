@@ -5,23 +5,23 @@
 
     android:id="@+id/cardViewContainer"
     android:layout_width="match_parent"
-    android:layout_height="148dp"
+    android:layout_height="@dimen/margin_card_view"
     card_view:cardCornerRadius="4dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="@dimen/margin_medium"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_margin="@dimen/margin_medium">
 
         <TextView
             android:id="@+id/nameRecipeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
+            android:paddingTop="@dimen/margin_medium"
             android:textColor="@color/colorNameRecipe"
-            android:textSize="32sp"
+            android:textSize="@dimen/text_size_big"
             tools:text="Tilte Recipe" />
 
         <ImageView
