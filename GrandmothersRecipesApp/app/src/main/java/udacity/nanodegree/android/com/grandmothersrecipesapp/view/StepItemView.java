@@ -13,7 +13,10 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
+
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.bo.ApiCallBack;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
 /**
@@ -28,6 +31,8 @@ public class StepItemView extends FrameLayout {
 
     @ViewById
     TextView stepDescription;
+
+    ApiCallback apiCallBack;
 
     public StepItemView(Context context) {
         super(context);
@@ -45,17 +50,21 @@ public class StepItemView extends FrameLayout {
     void init() {
     }
 
-    public void bind(Step step) {
-        if (step != null) {
+    public void bind(List<Step> items, int position, ApiCallback apiCallBack) {
+        this.apiCallBack = apiCallBack;
+
+        if (items != null && items.size() > 0) {
+            Step step = items.get(position);
+            Object[] stepArray = {items, position};
             stepDescription.setText(step.getShortDescription());
-            stepDescription.setTag(step);
+            stepDescription.setTag(stepArray);
         }
     }
 
 
     @Click(R.id.stapCardView)
     void showStepVideosOrImages() {
-        // TODO Chamar o fragment dos vídeos
+          apiCallBack.onItemClicView((Object[]) stepDescription.getTag());
     }
 
 }

@@ -1,9 +1,11 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -15,6 +17,7 @@ import org.androidannotations.annotations.ViewById;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.adapter.StepAdapter;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.bo.ApiCallBack;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 
 /**
@@ -23,6 +26,8 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 
 @EFragment(R.layout.fragment_recipe_detail)
 public class RecipeDetailFragment extends Fragment {
+
+    ApiCallback apiCallback;
 
     @ViewById
     NestedScrollView nestedScrollView;
@@ -46,6 +51,24 @@ public class RecipeDetailFragment extends Fragment {
         ingredientsText.setTag(recipe);
         initRecyclerView();
         showStepList();
+
+        stepAdapter.bindApiCallBack(new ApiCallback() {
+            @Override
+            public void onItemClicView(Object[] itemArray) {
+                apiCallback.onItemClicView(itemArray);
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            apiCallback = (ApiCallback) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnClickListener");
+        }
     }
 
     private void initRecyclerView() {

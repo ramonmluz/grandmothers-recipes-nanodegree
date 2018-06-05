@@ -11,7 +11,6 @@ public class Ingredient {
     protected Double quantity;
     protected String measure;
     protected String ingredient;
-    protected Recipe recipe;
 
     public Double getQuantity() {
         return quantity;

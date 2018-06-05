@@ -12,7 +12,6 @@ public class Step {
     protected String description;
     protected String videoURL;
     protected String thumbnailURL;
-    protected Recipe recipe;
 
     public int getId() {
         return id;
