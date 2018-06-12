@@ -44,7 +44,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
 
     private void callRecipeDetailFragment() {
         RecipeDetailFragment recipeDetailFragment = RecipeDetailFragment_.builder().recipe(recipe).build();
-        fragmentTransaction.replace(R.id.fragmentContainer, recipeDetailFragment);
+        fragmentTransaction.add(R.id.fragmentContainer, recipeDetailFragment);
         fragmentTransaction.commit();
     }
 

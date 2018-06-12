@@ -50,14 +50,9 @@ public class RecipeDetailFragment extends Fragment {
         ingredientsText.setText("Ingredients");
         ingredientsText.setTag(recipe);
         initRecyclerView();
-        showStepList();
-
-        stepAdapter.bindApiCallBack(new ApiCallback() {
-            @Override
-            public void onItemClicView(Object[] itemArray) {
-                apiCallback.onItemClicView(itemArray);
-            }
-        });
+        if (recipe != null && recipe.getSteps() != null && recipe.getSteps().size() > 0) {
+            showStepList();
+        }
     }
 
     @Override
@@ -75,13 +70,18 @@ public class RecipeDetailFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         stepRecyclerView.setLayoutManager(mLayoutManager);
         stepRecyclerView.setAdapter(stepAdapter);
+
+        stepAdapter.bindApiCallBack(new ApiCallback() {
+            @Override
+            public void onItemClicView(Object[] itemArray) {
+                apiCallback.onItemClicView(itemArray);
+            }
+        });
     }
 
     private void showStepList() {
-        if (recipe != null && recipe.getSteps() != null && recipe.getSteps().size() > 0) {
-            stepAdapter.setItems(recipe.getSteps());
-            stepAdapter.notifyDataSetChanged();
-        }
+        stepAdapter.setItems(recipe.getSteps());
+        stepAdapter.notifyDataSetChanged();
     }
 
     @Click(R.id.ingredientCardView)
