@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -16,7 +15,6 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.bo.ApiCallBack;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
 /**
@@ -27,10 +25,10 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 public class StepItemView extends FrameLayout {
 
     @ViewById
-    View stapCardView;
+    View cardView;
 
     @ViewById
-    TextView stepDescription;
+    TextView description;
 
     ApiCallback apiCallBack;
 
@@ -56,15 +54,14 @@ public class StepItemView extends FrameLayout {
         if (items != null && items.size() > 0) {
             Step step = items.get(position);
             Object[] stepArray = {items, position};
-            stepDescription.setText(step.getShortDescription());
-            stepDescription.setTag(stepArray);
+            description.setText(step.getShortDescription());
+            description.setTag(stepArray);
         }
     }
 
-
-    @Click(R.id.stapCardView)
+    @Click(R.id.cardView)
     void showStepVideosOrImages() {
-          apiCallBack.onItemClicView((Object[]) stepDescription.getTag());
+          apiCallBack.onItemClicView((Object[]) description.getTag());
     }
 
 }

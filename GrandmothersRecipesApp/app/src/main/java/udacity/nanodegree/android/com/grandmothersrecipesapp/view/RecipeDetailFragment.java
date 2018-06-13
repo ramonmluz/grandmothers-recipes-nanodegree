@@ -1,6 +1,7 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,7 +87,8 @@ public class RecipeDetailFragment extends Fragment {
 
     @Click(R.id.ingredientCardView)
     void showIngredientsList() {
-
+        Object[] itemArray = {recipe.getIngredients()};
+        apiCallback.onItemClicView(itemArray);
     }
 
 }

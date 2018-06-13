@@ -13,6 +13,7 @@ import org.androidannotations.annotations.Extra;
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
@@ -50,7 +51,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
 
     @Override
     public void onItemClicView(Object[] itemArray) {
-        if(itemArray.length > 1){ // Chamar Activty de Steps
+        if(itemArray.length > 1){
+            // Chamar Activty de Steps
             List<Step> steps = (List<Step>)itemArray[0];
             int position = (int) itemArray[1];
 
@@ -58,6 +60,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
                     .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .position(position)
                     .steps(steps)
+                    .start();
+        } else {
+            // Chama a activity
+            List<Ingredient> ingredients = (List<Ingredient>)itemArray[0];
+            IngredientDetailActivity_.intent(this)
+                    .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .ingredients(ingredients)
                     .start();
         }
     }

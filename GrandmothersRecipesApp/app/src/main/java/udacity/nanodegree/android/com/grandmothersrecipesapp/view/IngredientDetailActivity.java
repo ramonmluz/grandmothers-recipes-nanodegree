@@ -35,13 +35,9 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void callIngredientDetailFragment() {
-//        Step step = null;
-//        if(ingredients != null && ingredients.size() > 0) {
-//            step = ingredients.get(position);
-//        }
-//        StepDetailFragment stepDetailFragment = StepDetailFragment_.builder().step(step).steps(ingredients).build();
-//        fragmentTransaction.add(R.id.stepFragmentContainer, stepDetailFragment);
-//        fragmentTransaction.commit();
+        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder().ingredients(ingredients).build();
+        fragmentTransaction.add(R.id.ingredientFragmentContainer, ingredientDetailFragment);
+        fragmentTransaction.commit();
     }
 
 }
