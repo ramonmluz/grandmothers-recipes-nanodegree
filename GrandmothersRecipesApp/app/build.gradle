@@ -21,12 +21,15 @@ dependencies {
 
     def AAVersion = '4.4.0' //Anotações
 
+    implementation 'com.android.support:design:26.1.0'
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
     def parcelerVersion = '1.1.9'
     compile "org.parceler:parceler-api:$parcelerVersion"
     annotationProcessor "org.parceler:parceler:$parcelerVersion"
+
+    compile 'com.jpardogo.materialtabstrip:library:1.1.1'
 
     compile 'com.google.code.gson:gson:2.8.1'  // gson
     compile 'me.zhanghai.android.materialprogressbar:library:1.4.2' //ProgressBar

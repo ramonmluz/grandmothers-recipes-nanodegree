@@ -20,5 +20,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="margin_card_erro_view">100dp</dimen>
     <dimen name="text_size_big">32sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

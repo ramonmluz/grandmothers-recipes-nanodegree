@@ -1,12 +1,13 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
 import android.content.Context;
-import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -18,7 +19,6 @@ import org.androidannotations.annotations.ViewById;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.adapter.StepAdapter;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.bo.ApiCallBack;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 
 /**
@@ -29,6 +29,12 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 public class RecipeDetailFragment extends Fragment {
 
     ApiCallback apiCallback;
+
+    @ViewById
+    AppBarLayout appBar;
+
+    @ViewById
+    TextView titleToolbar;
 
     @ViewById
     NestedScrollView nestedScrollView;
@@ -50,6 +56,9 @@ public class RecipeDetailFragment extends Fragment {
         nestedScrollView.setNestedScrollingEnabled(false);
         ingredientsText.setText("Ingredients");
         ingredientsText.setTag(recipe);
+        titleToolbar.setText(R.string.recipes_detail);
+
+
         initRecyclerView();
         if (recipe != null && recipe.getSteps() != null && recipe.getSteps().size() > 0) {
             showStepList();
@@ -90,5 +99,11 @@ public class RecipeDetailFragment extends Fragment {
         Object[] itemArray = {recipe.getIngredients()};
         apiCallback.onItemClicView(itemArray);
     }
+
+    @Click
+    void goBack(){
+        getActivity().finish();
+    }
+
 
 }

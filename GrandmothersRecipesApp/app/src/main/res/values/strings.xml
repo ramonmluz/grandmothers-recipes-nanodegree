@@ -7,5 +7,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="recipes_url">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="recipes_detail">Recipes\'s Detail</string>
+    <string name="recipes_ingredients">Recipe\'s Ingredients</string>
 
 </resources>

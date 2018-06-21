@@ -5,15 +5,16 @@
 
     android:id="@+id/cardViewContainer"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/margin_card_view"
-    card_view:cardCornerRadius="4dp"
-    android:layout_marginBottom="@dimen/margin_medium"
-    >
+    android:layout_height="100dp"
+    android:layout_marginLeft="@dimen/margin_medium"
+    android:layout_marginRight="@dimen/margin_medium"
+    android:layout_marginTop="@dimen/margin_medium"
+    card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_medium">
+        android:padding="@dimen/margin_medium">
 
         <TextView
             android:id="@+id/nameRecipeTxt"
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_medium"
             android:textColor="@color/colorNameRecipe"
-            android:textSize="@dimen/text_size_big"
+            android:textAppearance="?android:textAppearanceLarge"
             tools:text="Tilte Recipe" />
 
         <ImageView

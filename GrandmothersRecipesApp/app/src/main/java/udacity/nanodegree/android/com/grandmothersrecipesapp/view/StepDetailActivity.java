@@ -1,21 +1,22 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
-import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+
+import com.astuetz.PagerSlidingTabStrip;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.adapter.StepDatailPageAdapter;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
 /**
@@ -23,32 +24,27 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
  */
 
 @EActivity(R.layout.activity_step_detail)
-public class StepDetailActivity extends AppCompatActivity{
+public class StepDetailActivity extends FragmentActivity{
+
+    @ViewById
+    ViewPager viewPager;
+
+    @ViewById
+    PagerSlidingTabStrip tabs;
 
     @Extra
     List<Step> steps;
 
     @Extra
-    int position;
+    int position; // TODO pssar position para o adapter
 
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+    private PagerAdapter pagerAdapter;
 
     @AfterViews
     void init() {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        callStepDetailFragment();
-    }
-
-    private void callStepDetailFragment() {
-        Step step = null;
-        if(steps != null && steps.size() > 0) {
-            step = steps.get(position);
-        }
-        StepDetailFragment stepDetailFragment = StepDetailFragment_.builder().step(step).steps(steps).build();
-        fragmentTransaction.add(R.id.stepFragmentContainer, stepDetailFragment);
-        fragmentTransaction.commit();
+        pagerAdapter = new StepDatailPageAdapter(getSupportFragmentManager(), steps);
+        viewPager.setAdapter(pagerAdapter);
+        tabs.setViewPager(viewPager);
     }
 
 }

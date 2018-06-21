@@ -3,9 +3,11 @@ package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
@@ -32,8 +34,12 @@ public class IngredientDetailFragment extends Fragment {
    @Bean
    IngradientAdapter ingradientAdapter;
 
+   @ViewById
+   TextView titleToolbar;
+
    @AfterViews
    void init() {
+      titleToolbar.setText(R.string.recipes_ingredients);
       initRecyclerView();
       if (ingredients != null && ingredients.size() > 0) {
          showStepList();
@@ -49,6 +55,11 @@ public class IngredientDetailFragment extends Fragment {
    private void showStepList() {
       ingradientAdapter.setItems(ingredients);
       ingradientAdapter.notifyDataSetChanged();
+   }
+
+   @Click
+   void goBack(){
+      getActivity().finish();
    }
 
 }

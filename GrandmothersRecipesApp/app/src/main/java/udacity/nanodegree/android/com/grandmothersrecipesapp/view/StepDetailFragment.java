@@ -60,9 +60,9 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
      * Inicia o player
      */
     private void initPlayer() {
-     playerView.setVisibility(View.VISIBLE);
-     // Obtem a uri
-     Uri mediaUri = getMediaUri();
+        playerView.setVisibility(View.VISIBLE);
+        // Obtem a uri
+        Uri mediaUri = getMediaUri();
         if (player == null && step != null && mediaUri != null) {
             // Criando uma instancia do ExoPlayer.
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -80,13 +80,13 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
             player.prepare(mediaSource);
             player.setPlayWhenReady(true);
-        }else{
+        } else {
             playerView.setVisibility(View.GONE);
         }
 
     }
 
-    private Uri getMediaUri(){
+    private Uri getMediaUri() {
         Uri uri = null;
         if (!TextUtils.isEmpty(step.getVideoURL())) {
             uri = Uri.parse(step.getVideoURL());
@@ -100,9 +100,11 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
      * Release ExoPlayer.
      */
     private void releasePlayer() {
-        player.stop();
-        player.release();
-        player = null;
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
 
     @Override

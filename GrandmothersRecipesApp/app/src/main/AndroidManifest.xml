@@ -3,7 +3,7 @@
     package="udacity.nanodegree.android.com.grandmothersrecipesapp">
 
     <!-- Adicionado permissão de acessso a internet -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".view.MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +20,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.RecipeDetailActivity_"/>
+        <activity
+            android:name=".view.RecipeDetailActivity_"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Impede que o aplicativo use a actionBar nativa padrãoo (AppTheme) -->
 
-        <activity android:name=".view.StepDetailActivity_"/>
+        <activity android:name=".view.StepDetailActivity_" />
 
-        <activity android:name=".view.IngredientDetailActivity_"/>
+        <activity android:name=".view.IngredientDetailActivity_"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".provider.GrandmothesWidgetProvider">
             <intent-filter>
@@ -36,6 +38,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/grandmothes_widget_provider_info" />
         </receiver>
+
     </application>
 
 </manifest>
