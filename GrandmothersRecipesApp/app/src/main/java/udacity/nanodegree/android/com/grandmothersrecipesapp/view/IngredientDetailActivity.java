@@ -35,7 +35,6 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     @AfterViews
     void init() {
-//        toolbarIngrdient.setTitle(R.string.recipes_ingredients);
         setSupportActionBar(toolbarIngrdient);
         getSupportActionBar().setTitle(R.string.recipes_ingredients);
         fragmentManager = getSupportFragmentManager();

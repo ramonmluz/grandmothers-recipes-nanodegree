@@ -46,7 +46,7 @@ public class StepDetailActivity extends AppCompatActivity {
     Toolbar toolbarStepDetail;
 
     @Extra
-    int position; // TODO pssar position para o adapter
+    int position;
 
     private PagerAdapter pagerAdapter;
 
@@ -55,6 +55,8 @@ public class StepDetailActivity extends AppCompatActivity {
         setupAcionBar();
         pagerAdapter = new StepDatailPageAdapter(getSupportFragmentManager(), steps);
         viewPager.setAdapter(pagerAdapter);
+        // Informa a posição do item da lista a ViewPager para ser apresentado selecionado juntamente com a tab
+        viewPager.setCurrentItem(position);
         tabs.setViewPager(viewPager);
     }
 

@@ -43,14 +43,17 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
     private SimpleExoPlayer player;
 
-    @ViewById
-    SimpleExoPlayerView playerView;
-
     @FragmentArg
     Step step;
 
     @FragmentArg
     List<Step> steps;
+
+    @ViewById
+    SimpleExoPlayerView playerView;
+
+    @ViewById
+    TextView description;
 
     @AfterViews
     void init() {
@@ -62,6 +65,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
      */
     private void initPlayer() {
         playerView.setVisibility(View.VISIBLE);
+        description.setText(step.getDescription());
         // Obtem a uri
         Uri mediaUri = getMediaUri();
         if (player == null && step != null && mediaUri != null) {

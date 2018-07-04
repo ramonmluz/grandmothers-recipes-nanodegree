@@ -14,6 +14,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
 
     <dimen name="margin_card_view">148dp</dimen>
     <dimen name="margin_card_view_small">72dp</dimen>
+    <dimen name="margin_card_view_big">194dp</dimen>
 
 
     <dimen name="load_img_size">60dp</dimen>
