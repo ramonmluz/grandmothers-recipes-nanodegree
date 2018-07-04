@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -30,11 +33,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
     @Extra
     Recipe recipe;
 
+    @ViewById
+    Toolbar toolbarRecipeDetail;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
     @AfterViews
     void init() {
+        setSupportActionBar(toolbarRecipeDetail);
+        getSupportActionBar().setTitle(R.string.recipes_detail);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -69,5 +78,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
                     .ingredients(ingredients)
                     .start();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

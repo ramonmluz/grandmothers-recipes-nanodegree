@@ -10,5 +10,8 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="recipes_detail">Recipes\'s Detail</string>
     <string name="recipes_ingredients">Recipe\'s Ingredients</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="recipes_steps">Recipe\'s Steps</string>
 
 </resources>

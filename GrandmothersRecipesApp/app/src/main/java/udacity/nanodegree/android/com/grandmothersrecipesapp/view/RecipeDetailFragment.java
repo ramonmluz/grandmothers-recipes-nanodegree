@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,12 +32,6 @@ public class RecipeDetailFragment extends Fragment {
     ApiCallback apiCallback;
 
     @ViewById
-    AppBarLayout appBar;
-
-    @ViewById
-    TextView titleToolbar;
-
-    @ViewById
     NestedScrollView nestedScrollView;
 
     @FragmentArg
@@ -53,15 +48,22 @@ public class RecipeDetailFragment extends Fragment {
 
     @AfterViews
     void init() {
-        nestedScrollView.setNestedScrollingEnabled(false);
+        setupAcionBar();
+        stepRecyclerView.setNestedScrollingEnabled(false);
         ingredientsText.setText("Ingredients");
         ingredientsText.setTag(recipe);
-        titleToolbar.setText(R.string.recipes_detail);
-
 
         initRecyclerView();
         if (recipe != null && recipe.getSteps() != null && recipe.getSteps().size() > 0) {
             showStepList();
+        }
+    }
+
+    private void setupAcionBar() {
+        ActionBar actionBar = ((RecipeDetailActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            // Apresenta o botão de voltar no menu
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -98,11 +100,6 @@ public class RecipeDetailFragment extends Fragment {
     void showIngredientsList() {
         Object[] itemArray = {recipe.getIngredients()};
         apiCallback.onItemClicView(itemArray);
-    }
-
-    @Click
-    void goBack(){
-        getActivity().finish();
     }
 
 

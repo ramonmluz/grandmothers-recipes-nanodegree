@@ -1,6 +1,7 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -25,41 +26,44 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient
 @EFragment(R.layout.fragment_ingrdient_detail)
 public class IngredientDetailFragment extends Fragment {
 
-   @ViewById
-   RecyclerView ingredientRecyclerView;
+    @ViewById
+    RecyclerView ingredientRecyclerView;
 
-   @FragmentArg
-   List<Ingredient> ingredients;
+    @FragmentArg
+    List<Ingredient> ingredients;
 
-   @Bean
-   IngradientAdapter ingradientAdapter;
+    @Bean
+    IngradientAdapter ingradientAdapter;
 
-   @ViewById
-   TextView titleToolbar;
+    @AfterViews
+    void init() {
+        setupAcionBar();
+        initRecyclerView();
+        if (ingredients != null && ingredients.size() > 0) {
+            showStepList();
+        }
+    }
 
-   @AfterViews
-   void init() {
-      titleToolbar.setText(R.string.recipes_ingredients);
-      initRecyclerView();
-      if (ingredients != null && ingredients.size() > 0) {
-         showStepList();
-      }
-   }
+    private void setupAcionBar() {
+        ActionBar actionBar = ((IngredientDetailActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            // Apresenta o botão de voltar no menu
+            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeButtonEnabled(true);
+        }
+    }
 
-   private void initRecyclerView() {
-      LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-      ingredientRecyclerView.setLayoutManager(mLayoutManager);
-      ingredientRecyclerView.setAdapter(ingradientAdapter);
-   }
 
-   private void showStepList() {
-      ingradientAdapter.setItems(ingredients);
-      ingradientAdapter.notifyDataSetChanged();
-   }
+    private void initRecyclerView() {
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        ingredientRecyclerView.setLayoutManager(mLayoutManager);
+        ingredientRecyclerView.setAdapter(ingradientAdapter);
+//        ingredientRecyclerView.setNestedScrollingEnabled(false);
+    }
 
-   @Click
-   void goBack(){
-      getActivity().finish();
-   }
+    private void showStepList() {
+        ingradientAdapter.setItems(ingredients);
+        ingradientAdapter.notifyDataSetChanged();
+    }
 
 }

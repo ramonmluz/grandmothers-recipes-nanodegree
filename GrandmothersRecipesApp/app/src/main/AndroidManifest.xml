@@ -20,14 +20,35 @@
             </intent-filter>
         </activity>
 
+        <!-- NoActionBar - Impede que o aplicativo use a actionBar nativa padrãoo (AppTheme) -->
+        <!-- singleTop -   Matem o estado da activity quando essa é invocada no botão up(voltar) -->
+
         <activity
             android:name=".view.RecipeDetailActivity_"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- Impede que o aplicativo use a actionBar nativa padrãoo (AppTheme) -->
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
 
-        <activity android:name=".view.StepDetailActivity_" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainActivity_" />
+        </activity>
 
-        <activity android:name=".view.IngredientDetailActivity_"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StepDetailActivity_"
+            android:theme="@style/AppTheme.NoActionBar" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.RecipeDetailActivity_" />
+        </activity>
+
+        <activity
+            android:name=".view.IngredientDetailActivity_"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.RecipeDetailActivity_" />
+        </activity>
 
         <receiver android:name=".provider.GrandmothesWidgetProvider">
             <intent-filter>
@@ -38,7 +59,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/grandmothes_widget_provider_info" />
         </receiver>
-
     </application>
 
 </manifest>

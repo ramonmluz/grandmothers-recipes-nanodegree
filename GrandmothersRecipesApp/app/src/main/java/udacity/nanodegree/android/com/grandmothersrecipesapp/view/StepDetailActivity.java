@@ -5,10 +5,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -24,7 +31,10 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
  */
 
 @EActivity(R.layout.activity_step_detail)
-public class StepDetailActivity extends FragmentActivity{
+public class StepDetailActivity extends AppCompatActivity {
+
+    @Extra
+    List<Step> steps;
 
     @ViewById
     ViewPager viewPager;
@@ -32,8 +42,8 @@ public class StepDetailActivity extends FragmentActivity{
     @ViewById
     PagerSlidingTabStrip tabs;
 
-    @Extra
-    List<Step> steps;
+    @ViewById
+    Toolbar toolbarStepDetail;
 
     @Extra
     int position; // TODO pssar position para o adapter
@@ -42,9 +52,19 @@ public class StepDetailActivity extends FragmentActivity{
 
     @AfterViews
     void init() {
+        setupAcionBar();
         pagerAdapter = new StepDatailPageAdapter(getSupportFragmentManager(), steps);
         viewPager.setAdapter(pagerAdapter);
         tabs.setViewPager(viewPager);
     }
 
+    private void setupAcionBar() {
+        setSupportActionBar(toolbarStepDetail);
+        ActionBar actionBar =  getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.recipes_steps);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 }
