@@ -3,6 +3,7 @@ package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     TextView textMsgErroView;
 
+    @ViewById
+    View mainContainerTablet;
+
     private  List<Recipe> recipes;
 
     @AfterViews
@@ -57,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        int countColumn = 1;
+        if(mainContainerTablet != null){
+            countColumn = 2;
+            // Instancia o GridLayoutManeger informado que o recycler terá 2 colunas
+            mLayoutManager = new GridLayoutManager(recyclerView.getContext(), countColumn);
+            // Seta o actionBar padrão para o título
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(recipeAdapter);
     }

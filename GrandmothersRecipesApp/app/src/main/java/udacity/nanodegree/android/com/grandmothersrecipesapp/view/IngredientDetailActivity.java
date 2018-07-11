@@ -27,6 +27,9 @@ public class IngredientDetailActivity extends AppCompatActivity {
     @Extra
     List<Ingredient> ingredients;
 
+    @Extra
+    boolean isCellphone;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -35,15 +38,17 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     @AfterViews
     void init() {
+
         setSupportActionBar(toolbarIngrdient);
         getSupportActionBar().setTitle(R.string.recipes_ingredients);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         callIngredientDetailFragment();
     }
 
     private void callIngredientDetailFragment() {
-        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder().ingredients(ingredients).build();
+        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder().isCellphone(isCellphone).ingredients(ingredients).build();
         fragmentTransaction.add(R.id.ingredientFragmentContainer, ingredientDetailFragment);
         fragmentTransaction.commit();
     }

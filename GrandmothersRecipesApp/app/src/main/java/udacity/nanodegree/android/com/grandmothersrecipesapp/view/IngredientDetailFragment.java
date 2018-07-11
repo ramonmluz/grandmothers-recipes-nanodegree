@@ -32,12 +32,17 @@ public class IngredientDetailFragment extends Fragment {
     @FragmentArg
     List<Ingredient> ingredients;
 
+    @FragmentArg
+    boolean isCellphone;
+
     @Bean
     IngradientAdapter ingradientAdapter;
 
     @AfterViews
     void init() {
-        setupAcionBar();
+        if (isCellphone) {
+            setupAcionBar();
+        }
         initRecyclerView();
         if (ingredients != null && ingredients.size() > 0) {
             showStepList();

@@ -48,11 +48,17 @@ public class StepDetailActivity extends AppCompatActivity {
     @Extra
     int position;
 
+    @Extra
+    boolean isCellphone;
+
     private PagerAdapter pagerAdapter;
 
     @AfterViews
     void init() {
-        setupAcionBar();
+        if (isCellphone) {
+            setupAcionBar();
+        }
+
         pagerAdapter = new StepDatailPageAdapter(getSupportFragmentManager(), steps);
         viewPager.setAdapter(pagerAdapter);
         // Informa a posição do item da lista a ViewPager para ser apresentado selecionado juntamente com a tab
@@ -62,7 +68,7 @@ public class StepDetailActivity extends AppCompatActivity {
 
     private void setupAcionBar() {
         setSupportActionBar(toolbarStepDetail);
-        ActionBar actionBar =  getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setTitle(R.string.recipes_steps);
