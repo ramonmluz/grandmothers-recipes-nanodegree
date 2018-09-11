@@ -61,7 +61,8 @@ public class StepItemView extends FrameLayout {
 
     @Click(R.id.cardView)
     void showStepVideosOrImages() {
-          apiCallBack.onItemClicView((Object[]) description.getTag());
+       Object[] stepArray = (Object[]) description.getTag();
+          apiCallBack.onItemClickStepView((List<Step>) stepArray[0], ((Integer) stepArray[1]).intValue());
     }
 
 }

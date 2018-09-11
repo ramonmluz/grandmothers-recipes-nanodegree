@@ -1,9 +1,12 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
-/**
- * Created by ramon on 05/06/18.
- */
+import java.util.List;
+
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
+
 
 public interface ApiCallback {
-     void onItemClicView(Object[] itemArray);
+     void onItemClickStepView(List<Step> steps, int position);
+     void onItemClickIngrendientView(List<Ingredient> ingredients);
 }

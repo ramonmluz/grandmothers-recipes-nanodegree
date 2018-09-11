@@ -3,17 +3,14 @@ package udacity.nanodegree.android.com.grandmothersrecipesapp.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import java.util.List;
 
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.bo.ApiCallBack;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.ApiCallback;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.view.RecipeItemView;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.StepItemView;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.StepItemView_;
 
@@ -38,9 +35,15 @@ public class StepAdapter extends RecyclerViewAdapterBase<Step,StepItemView> {
         StepItemView view = holder.getView();
         Step step = items.get(position);
         view.bind(items, position, new ApiCallback() {
+
             @Override
-            public void onItemClicView(Object[] itemArray) {
-                apiCallback.onItemClicView(itemArray);
+            public void onItemClickStepView(List<Step> steps, int position) {
+                apiCallback.onItemClickStepView(steps, position);
+            }
+
+            @Override
+            public void onItemClickIngrendientView(List<Ingredient> ingredients) {
+
             }
         });
     }
@@ -54,4 +57,13 @@ public class StepAdapter extends RecyclerViewAdapterBase<Step,StepItemView> {
         this.apiCallback = apiCallBack;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 }

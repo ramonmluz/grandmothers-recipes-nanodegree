@@ -39,4 +39,14 @@ public class RecipeAdapter extends RecyclerViewAdapterBase<Recipe, RecipeItemVie
     public void setItems(List<Recipe> items) {
         super.setItems(items);
     }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 }

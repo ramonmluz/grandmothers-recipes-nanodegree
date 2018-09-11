@@ -2,6 +2,7 @@ package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
@@ -50,13 +52,19 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     View mainContainerTablet;
 
-    private  List<Recipe> recipes;
+    @InstanceState
+    protected List<Recipe> recipes;
 
     @AfterViews
      void init(){
         textMsgErroView.setText(getString(R.string.erro_listar_receitas));
-        updateRecipes();
         initRecyclerView();
+
+     if(recipes != null && recipes.size() >0){
+            showList(recipes);
+        } else {
+            updateRecipes();
+        }
     }
 
     private void initRecyclerView() {
@@ -70,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
             // Seta o actionBar padrão para o título
             getSupportActionBar().setTitle(R.string.app_name);
         }
+
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(recipeAdapter);
     }
 
+
     private void updateRecipes() {
-         showView(progress);
         recipeBO.RequestMovieVolley(new ApiCallBack() {
             @Override
             public void onSuccess(Object response) {

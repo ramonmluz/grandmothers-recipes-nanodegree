@@ -15,6 +15,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -59,9 +60,27 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
     @ViewById
     PagerSlidingTabStrip tabs;
 
+
+    @InstanceState
+    List<Step> steps;
+
+    @InstanceState
+    List<Ingredient> ingredients;
+
+    @InstanceState
+    boolean isChangePosition;
+
+    @InstanceState
+    boolean isStepDetailView;
+
+    @InstanceState
+    int positionClickedStep;
+
+
     private PagerAdapter pagerAdapter;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
 
     @AfterViews
     void init() {
@@ -80,41 +99,70 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
 
     private void callRecipeDetailFragment() {
         RecipeDetailFragment recipeDetailFragment = RecipeDetailFragment_.builder().recipe(recipe).build();
-        fragmentTransaction.add(R.id.fragmentContainer, recipeDetailFragment);
-        fragmentTransaction.commit();
+
+        if (!isChangePosition) {
+            fragmentTransaction.add(R.id.fragmentContainer, recipeDetailFragment);
+            fragmentTransaction.commit();
+            isChangePosition = true;
+        } else {
+            // Posição foi modificada
+            fragmentTransaction.replace(R.id.fragmentContainer, recipeDetailFragment);
+
+            // Varifica se os passos ou ingredientes foram clicados no modo tablet, e se a view a ser
+            // apresentada é e de ingredients pu passos (isStepDetailView)
+            if (containerRecipeDatailTablet != null) {
+                if (steps != null && steps.size() > 0 && isStepDetailView) {
+                    onItemClickStepView(steps, positionClickedStep);
+                } else if (ingredients != null && ingredients.size() > 0 && !isStepDetailView){
+                    onItemClickIngrendientView(ingredients);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void onItemClicView(Object[] itemArray) {
+    public void onItemClickStepView(List<Step> steps, int position) {
+        // Seta o parâmetro passado para iniciar a chamada
+        isStepDetailView = true;
+        this.steps = steps;
+        this.positionClickedStep = position;
 
+        boolean isCellphone = checkIsCellphone();
+
+        initStepDetail(isCellphone);
+
+    }
+
+    private boolean checkIsCellphone() {
         boolean isCellphone = true;
         if (containerRecipeDatailTablet != null) {
             isCellphone = false;
         }
-
-        if (itemArray.length > 1) {
-            initStepDetail(itemArray, isCellphone);
-        } else {
-            initIngredientsDetail(itemArray[0], isCellphone);
-        }
+        return isCellphone;
     }
+
+    @Override
+    public void onItemClickIngrendientView(List<Ingredient> ingredients) {
+        isStepDetailView = false;
+        this.ingredients = ingredients;
+        boolean isCellphone = checkIsCellphone();
+        initIngredientsDetail(isCellphone);
+    }
+
 
     /**
      * Incia a chamada da activity ou configuração para tablet do Step Detail
      *
-     * @param itemArray
      * @param isCellphone
      */
-    private void initStepDetail(Object[] itemArray, boolean isCellphone) {
-
-        List<Step> steps = (List<Step>) itemArray[0];
-        int position = (int) itemArray[1];
+    private void initStepDetail(boolean isCellphone) {
 
         if (isCellphone) {
             // Chamar Activty de Steps
             StepDetailActivity_.intent(this)
                     .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .position(position)
+                    .position(positionClickedStep)
                     .steps(steps)
                     .isCellphone(true)
                     .start();
@@ -125,7 +173,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
             pagerAdapter = new StepDatailPageAdapter(getSupportFragmentManager(), steps);
             viewPager.setAdapter(pagerAdapter);
             // Informa a posição do item da lista a ViewPager para ser apresentado selecionado juntamente com a tab
-            viewPager.setCurrentItem(position);
+            viewPager.setCurrentItem(positionClickedStep);
             tabs.setViewPager(viewPager);
         }
     }
@@ -133,12 +181,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
     /**
      * Incia a chamada da activity ou configuração para tablet doa Ingredient Detail
      *
-     * @param o
      * @param isCellphone
      */
-    private void initIngredientsDetail(Object o, boolean isCellphone) {
-
-        List<Ingredient> ingredients = (List<Ingredient>) o;
+    private void initIngredientsDetail(boolean isCellphone) {
 
         if (isCellphone) { // Dipositivo é um tablet
             // Chama a activity de ingredientes

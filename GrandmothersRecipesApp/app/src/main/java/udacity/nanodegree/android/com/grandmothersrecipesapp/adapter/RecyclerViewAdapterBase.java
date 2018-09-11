@@ -34,4 +34,6 @@ public abstract class RecyclerViewAdapterBase<T, V extends View> extends Recycle
     public void setItems(List<T> items) {
         this.items = items;
     }
+
+
 }

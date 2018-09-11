@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public class IngredientDetailActivity extends AppCompatActivity {
     @Extra
     boolean isCellphone;
 
+    @InstanceState
+    boolean isChangePosition;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -48,9 +52,18 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void callIngredientDetailFragment() {
-        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder().isCellphone(isCellphone).ingredients(ingredients).build();
-        fragmentTransaction.add(R.id.ingredientFragmentContainer, ingredientDetailFragment);
-        fragmentTransaction.commit();
+        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder()
+                .isCellphone(isCellphone)
+                .ingredients(ingredients)
+                .build();
+
+        if (!isChangePosition) {
+            fragmentTransaction.add(R.id.ingredientFragmentContainer, ingredientDetailFragment);
+            fragmentTransaction.commit();
+            isChangePosition = true;
+        } else {
+            fragmentTransaction.replace(R.id.ingredientFragmentContainer, ingredientDetailFragment);
+        }
     }
 
 }
