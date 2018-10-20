@@ -44,7 +44,7 @@ public class IngredientItemView extends FrameLayout {
 
     public void bind(Ingredient item) {
         if (item != null) {
-            description.setText(item.getIngredient());
+            description.setText(item.getConcatQuantityIngradient());
         }
     }
 }

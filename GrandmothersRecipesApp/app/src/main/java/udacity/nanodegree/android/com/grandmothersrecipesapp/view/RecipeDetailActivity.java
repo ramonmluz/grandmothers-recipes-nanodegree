@@ -191,6 +191,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
                     .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .ingredients(ingredients)
                     .isCellphone(isCellphone)
+                    .idRecipe(recipe.getId())
                     .start();
         } else {
             setTabletsColumnsVisibility(View.VISIBLE, View.VISIBLE, View.GONE);

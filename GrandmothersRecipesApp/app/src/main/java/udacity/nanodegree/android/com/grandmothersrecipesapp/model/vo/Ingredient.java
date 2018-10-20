@@ -35,4 +35,8 @@ public class Ingredient {
     public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
+
+    public String getConcatQuantityIngradient() {
+        return this.quantity + " " + this.ingredient;
+    }
 }

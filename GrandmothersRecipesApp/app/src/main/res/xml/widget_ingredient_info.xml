@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/grandmothes_widget_provider"
-    android:minHeight="100dp"
-    android:minWidth="100dp"
+    android:minHeight="110dp"
+    android:minWidth="110dp"
     android:previewImage="@drawable/ic_recipe"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
-    android:widgetCategory="home_screen"></appwidget-provider>
+    android:widgetCategory="home_screen">
+</appwidget-provider>
