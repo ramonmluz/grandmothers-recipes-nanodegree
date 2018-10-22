@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.provider.IngredientContract.IngredientEntry;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.util.Constants;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.view.IngredientDetailActivity;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.view.RecipeDetailFragment;
 
 public class IngredientsRemoteViewsService extends RemoteViewsService {
 
@@ -43,22 +41,21 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            if(!isNewInstance){
+            if (!isNewInstance) {
                 //Obtem as preferências armazenadas do.
-                SharedPreferences prefs = IngredientDetailActivity.ingredientPreference.getSharedPreferences();
-                // Obtem a clissificação selecionada
-                recipeId = prefs.getInt("recipeId",0);
+                SharedPreferences prefs = RecipeDetailFragment.ingredientPreference.getSharedPreferences();
+                // Obtem o recipeId armazenado
+                recipeId = prefs.getInt("recipeId", 0);
             }
             isNewInstance = false;
 
             // Obtem os ingredientes a partir do id da receita
             mCursor = getContentResolver().query(IngredientEntry.CONTENT_URI,
-                    new String[]{IngredientEntry.COLUMN_ID_RECIPE, IngredientEntry.COLUMN_INGREDIENT_NAME},
+                    new String[]{IngredientEntry.COLUMN_ID_RECIPE, IngredientEntry.COLUMN_QUANTITY, IngredientEntry.COLUMN_INGREDIENT_NAME},
                     IngredientEntry.COLUMN_ID_RECIPE + " = ?",
                     new String[]{String.valueOf(recipeId)},
                     null);
         }
-
 
 
         @Override
@@ -80,19 +77,20 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
                 return null;
             }
             mCursor.moveToPosition(i);
-            int idIndexNameIngredient = mCursor.getColumnIndex(IngredientEntry.COLUMN_INGREDIENT_NAME);
-            int idIndexRecipe = mCursor.getColumnIndex(IngredientEntry.COLUMN_ID_RECIPE);
+            int recipeIndex = mCursor.getColumnIndex(IngredientEntry.COLUMN_ID_RECIPE);
+            int quantityIndex = mCursor.getColumnIndex(IngredientEntry.COLUMN_QUANTITY);
+            int NameIngredientIndex = mCursor.getColumnIndex(IngredientEntry.COLUMN_INGREDIENT_NAME);
 
-            String nameIgredient = mCursor.getString(idIndexNameIngredient);
-            int idRecipe = mCursor.getInt(idIndexRecipe);
+            int recipeId = mCursor.getInt(recipeIndex);
+            Double quantity = mCursor.getDouble(quantityIndex);
+            String nameIgredient = mCursor.getString(NameIngredientIndex);
 
             RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.list_widget_ingredient_item);
-            remoteViews.setTextViewText(R.id.widgetIngredientItemTxt, nameIgredient);
+            remoteViews.setTextViewText(R.id.widgetIngredientItemTxt, quantity + " " + nameIgredient);
 
-            Bundle extras = new Bundle();
-            extras.putInt(Constants.EXTRA_RECIPE_ID, idRecipe);
             Intent fillInIntent = new Intent();
-            fillInIntent.putExtras(extras);
+            fillInIntent.putExtra(Constants.EXTRA_RECIPE_ID, recipeId);
+
             remoteViews.setOnClickFillInIntent(R.id.widgetIngredientItemTxt, fillInIntent);
             return remoteViews;
         }

@@ -21,6 +21,7 @@ public class IngredientDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_INGRDIENTS_TABLE = "CREATE TABLE " + IngredientEntry.TABLE_NAME + "( " +
                 IngredientEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 IngredientEntry.COLUMN_ID_RECIPE + " INTEGER NOT NULL, " +
+                IngredientEntry.COLUMN_QUANTITY  + " REAL NOT NULL, " +
                 IngredientEntry.COLUMN_INGREDIENT_NAME + " TEXT NOT NULL)";
 
         sqLiteDatabase.execSQL(SQL_CREATE_INGRDIENTS_TABLE);

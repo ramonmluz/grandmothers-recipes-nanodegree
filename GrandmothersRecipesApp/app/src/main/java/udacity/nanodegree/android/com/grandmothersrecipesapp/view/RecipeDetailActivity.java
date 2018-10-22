@@ -108,13 +108,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
             // Posição foi modificada
             fragmentTransaction.replace(R.id.fragmentContainer, recipeDetailFragment);
 
-            // Varifica se os passos ou ingredientes foram clicados no modo tablet, e se a view a ser
+            // Varifica se algum passo foi clicado no modo tablet, e se a view a ser
             // apresentada é e de ingredients pu passos (isStepDetailView)
             if (containerRecipeDatailTablet != null) {
                 if (steps != null && steps.size() > 0 && isStepDetailView) {
                     onItemClickStepView(steps, positionClickedStep);
-                } else if (ingredients != null && ingredients.size() > 0 && !isStepDetailView){
-                    onItemClickIngrendientView(ingredients);
                 }
             }
         }
@@ -141,15 +139,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
         }
         return isCellphone;
     }
-
-    @Override
-    public void onItemClickIngrendientView(List<Ingredient> ingredients) {
-        isStepDetailView = false;
-        this.ingredients = ingredients;
-        boolean isCellphone = checkIsCellphone();
-        initIngredientsDetail(isCellphone);
-    }
-
 
     /**
      * Incia a chamada da activity ou configuração para tablet do Step Detail
@@ -178,26 +167,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
         }
     }
 
-    /**
-     * Incia a chamada da activity ou configuração para tablet doa Ingredient Detail
-     *
-     * @param isCellphone
-     */
-    private void initIngredientsDetail(boolean isCellphone) {
-
-        if (isCellphone) { // Dipositivo é um tablet
-            // Chama a activity de ingredientes
-            IngredientDetailActivity_.intent(this)
-                    .flags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .ingredients(ingredients)
-                    .isCellphone(isCellphone)
-                    .idRecipe(recipe.getId())
-                    .start();
-        } else {
-            setTabletsColumnsVisibility(View.VISIBLE, View.VISIBLE, View.GONE);
-            callIngredientDetailFragment(ingredients, isCellphone);
-        }
-    }
 
     private void setTabletsColumnsVisibility(
             int containerSecondColumnVisivlility,
@@ -209,24 +178,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements ApiCallba
         secondColumnStepDetail.setVisibility(secondColumnVisibility);
     }
 
-    /**
-     * Apresenta o fragment de Ingredients para tablet
-     *
-     * @param ingredients
-     * @param isCellphone
-     */
-    private void callIngredientDetailFragment(List<Ingredient> ingredients, boolean isCellphone) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        IngredientDetailFragment ingredientDetailFragment = IngredientDetailFragment_.builder()
-                .ingredients(ingredients)
-                .isCellphone(isCellphone)
-                .build();
-
-        fragmentTransaction.add(R.id.ingredientFragmentContainer, ingredientDetailFragment);
-        fragmentTransaction.commit();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

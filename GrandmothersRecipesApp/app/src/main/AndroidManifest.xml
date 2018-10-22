@@ -38,13 +38,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.RecipeDetailActivity_" />
         </activity>
-        <activity
-            android:name=".view.IngredientDetailActivity_"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.RecipeDetailActivity_" />
-        </activity>
 
         <receiver android:name=".provider.GrandmothesWidgetProvider">
             <intent-filter>

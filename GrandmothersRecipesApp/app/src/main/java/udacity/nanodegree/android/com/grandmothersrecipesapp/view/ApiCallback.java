@@ -8,5 +8,4 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
 public interface ApiCallback {
      void onItemClickStepView(List<Step> steps, int position);
-     void onItemClickIngrendientView(List<Ingredient> ingredients);
 }

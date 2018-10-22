@@ -1,6 +1,7 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -8,25 +9,26 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.adapter.StepAdapter;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.model.dao.IngredientDao;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Recipe;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
+import udacity.nanodegree.android.com.grandmothersrecipesapp.service.IngredientIntentService;
 
 /**
  * Created by ramon on 31/05/18.
@@ -35,7 +37,9 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 @EFragment(R.layout.fragment_recipe_detail)
 public class RecipeDetailFragment extends Fragment {
 
-    ApiCallback apiCallback;
+    @Pref
+    public  static  IngredientPreference_ ingredientPreference;
+
 
     @ViewById
     NestedScrollView nestedScrollView;
@@ -47,26 +51,30 @@ public class RecipeDetailFragment extends Fragment {
     RecyclerView stepRecyclerView;
 
     @ViewById
-    TextView ingredientsText;
+    LinearLayout listViewIngredients;
 
     @Bean
     StepAdapter stepAdapter;
 
     @InstanceState
     protected List<Step> steps;
-//
+    //
     @InstanceState
     protected Parcelable listStatePosition;
 
     protected boolean loadViewsLandscape;
 
+    ApiCallback apiCallback;
+
+    IngredientDao ingredientDao;
+
+
     @AfterViews
     void init() {
-
-        setupAcionBar();
+        ingredientDao = new IngredientDao(getContext().getContentResolver());
         stepRecyclerView.setNestedScrollingEnabled(false);
-        ingredientsText.setText("Ingredients");
-        ingredientsText.setTag(recipe);
+        setupAcionBar();
+        fillLayoutIngredientItemView();
         initRecyclerView();
 
         if (CollectionUtils.isNotEmpty(steps)) {
@@ -75,15 +83,7 @@ public class RecipeDetailFragment extends Fragment {
         } else {
             showStepList(recipe.getSteps());
         }
-
     }
-
-    private void fillRecyclerViewInSavePosition() {
-        Log.d("Teste", "Teste");
-        stepRecyclerView.getLayoutManager().onRestoreInstanceState(listStatePosition);
-        showStepList(steps);
-    }
-
 
     private void setupAcionBar() {
         ActionBar actionBar = ((RecipeDetailActivity) getActivity()).getSupportActionBar();
@@ -92,6 +92,62 @@ public class RecipeDetailFragment extends Fragment {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    private void fillLayoutIngredientItemView() {
+        if (recipe != null && CollectionUtils.isNotEmpty(recipe.getIngredients())) {
+            List<Ingredient> ingredients = recipe.getIngredients();
+            for (Ingredient ingredient : ingredients) {
+                IngredientItemView view = IngredientItemView_.build(getContext());
+                view.bind(ingredient);
+                listViewIngredients.addView(view);
+            }
+
+            insertIngredientsDontSaved(ingredients);
+        }
+    }
+
+    private void insertIngredientsDontSaved(List<Ingredient> ingredients) {
+        int recipeId = recipe.getId();
+        Cursor cursor = ingredientDao.countIngredientSaved(recipeId);
+        int count = cursor.getCount();
+        if (count == 0) {
+            ingredientDao.insertIngredients(ingredients, recipeId);
+        }
+        ingredientPreference.recipeId().put(recipeId);
+        IngredientIntentService.startActiontWidgetIngredients(getContext(), recipeId);
+    }
+
+    private void initRecyclerView() {
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        stepRecyclerView.setLayoutManager(mLayoutManager);
+        stepRecyclerView.setAdapter(stepAdapter);
+
+        stepAdapter.bindApiCallBack(new ApiCallback() {
+
+            @Override
+            public void onItemClickStepView(List<Step> steps, int position) {
+                apiCallback.onItemClickStepView(steps, position);
+            }
+        });
+    }
+
+
+    private void fillRecyclerViewInSavePosition() {
+        stepRecyclerView.getLayoutManager().onRestoreInstanceState(listStatePosition);
+        showStepList(steps);
+    }
+
+    private void showStepList(List<Step> steps) {
+
+        if (CollectionUtils.isNotEmpty(stepAdapter.getItems())) {
+            int size = steps.size();
+            stepAdapter.notifyItemRangeRemoved(0, size);
+        }
+
+        stepAdapter.setItems(steps);
+        stepAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -119,41 +175,11 @@ public class RecipeDetailFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void initRecyclerView() {
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        stepRecyclerView.setLayoutManager(mLayoutManager);
-        stepRecyclerView.setAdapter(stepAdapter);
 
-        stepAdapter.bindApiCallBack(new ApiCallback() {
-
-            @Override
-            public void onItemClickStepView(List<Step> steps, int position) {
-                apiCallback.onItemClickStepView(steps, position);
-            }
-
-            @Override
-            public void onItemClickIngrendientView(List<Ingredient> ingredients) {
-
-            }
-
-        });
-    }
-
-    private void showStepList(List<Step> steps) {
-
-        if(CollectionUtils.isNotEmpty(stepAdapter.getItems())){
-            int size = steps.size();
-            stepAdapter.notifyItemRangeRemoved(0, size);
-        }
-
-        stepAdapter.setItems(steps);
-        stepAdapter.notifyDataSetChanged();
-    }
-
-    @Click(R.id.ingredientCardView)
-    void showIngredientsList() {
-        apiCallback.onItemClickIngrendientView(recipe.getIngredients());
-    }
+//    @Click(R.id.ingredientCardView)
+//    void showIngredientsList() {
+//        apiCallback.onItemClickIngrendientView(recipe.getIngredients());
+//    }
 
 
 }

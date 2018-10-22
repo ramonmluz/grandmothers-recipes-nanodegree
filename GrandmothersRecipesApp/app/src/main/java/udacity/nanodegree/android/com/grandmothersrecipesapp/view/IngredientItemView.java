@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.EViewGroup;
@@ -17,30 +18,17 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 
-/**
- * Created by ramon on 13/06/18.
- */
 
 @EViewGroup(R.layout.view_ingredient_item)
-public class IngredientItemView extends FrameLayout {
-
-    @ViewById
-    View cardView;
+public class IngredientItemView extends LinearLayout {
 
     @ViewById
     TextView description;
 
-    public IngredientItemView(@NonNull Context context) {
+    public IngredientItemView(Context context) {
         super(context);
     }
 
-    public IngredientItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public IngredientItemView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
 
     public void bind(Ingredient item) {
         if (item != null) {

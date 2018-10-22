@@ -1,6 +1,5 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.adapter;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -8,7 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.view.StepDetailFragment;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.StepDetailFragment_;
 
 /**

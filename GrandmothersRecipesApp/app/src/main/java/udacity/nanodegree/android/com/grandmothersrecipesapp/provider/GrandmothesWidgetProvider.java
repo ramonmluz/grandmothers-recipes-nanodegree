@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -15,7 +14,6 @@ import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.service.IngredientIntentService;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.service.IngredientsRemoteViewsService;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.util.Constants;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.view.IngredientDetailActivity_;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.MainActivity_;
 
 public class GrandmothesWidgetProvider extends AppWidgetProvider{
@@ -43,18 +41,12 @@ public class GrandmothesWidgetProvider extends AppWidgetProvider{
         intent.putExtra(Constants.EXTRA_RECIPE_ID, recipeId);
         views.setRemoteAdapter(R.id.ingredientWidgetList, intent);
 
-        // Criando a itent para chamar a classe principal
-        Intent appIntent = new Intent(context, IngredientDetailActivity_.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, appIntent, 0);
-        views.setPendingIntentTemplate(R.id.ingredientWidgetList, pendingIntent);
-
         return views;
     }
 
     @NonNull
     private static RemoteViews getSampleRemoteViews(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.grandmothes_widget_provider);
-        // views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Criando a itent para chamar a classe principal
         Intent intent = new Intent(context, MainActivity_.class);

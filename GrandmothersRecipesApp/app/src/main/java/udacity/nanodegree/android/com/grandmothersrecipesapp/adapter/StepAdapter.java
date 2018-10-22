@@ -40,11 +40,6 @@ public class StepAdapter extends RecyclerViewAdapterBase<Step,StepItemView> {
             public void onItemClickStepView(List<Step> steps, int position) {
                 apiCallback.onItemClickStepView(steps, position);
             }
-
-            @Override
-            public void onItemClickIngrendientView(List<Ingredient> ingredients) {
-
-            }
         });
     }
 
