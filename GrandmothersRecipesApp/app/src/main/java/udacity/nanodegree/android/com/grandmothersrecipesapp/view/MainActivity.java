@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateRecipes() {
+        showView(progress);
         recipeBO.RequestMovieVolley(new ApiCallBack() {
             @Override
             public void onSuccess(Object response) {

@@ -28,7 +28,7 @@ public class StepItemView extends FrameLayout {
     View cardView;
 
     @ViewById
-    TextView description;
+    TextView stepDescription;
 
     ApiCallback apiCallBack;
 
@@ -54,14 +54,14 @@ public class StepItemView extends FrameLayout {
         if (items != null && items.size() > 0) {
             Step step = items.get(position);
             Object[] stepArray = {items, position};
-            description.setText(step.getShortDescription());
-            description.setTag(stepArray);
+            stepDescription.setText(step.getShortDescription());
+            stepDescription.setTag(stepArray);
         }
     }
 
     @Click(R.id.cardView)
     void showStepVideosOrImages() {
-       Object[] stepArray = (Object[]) description.getTag();
+       Object[] stepArray = (Object[]) stepDescription.getTag();
           apiCallBack.onItemClickStepView((List<Step>) stepArray[0], ((Integer) stepArray[1]).intValue());
     }
 
