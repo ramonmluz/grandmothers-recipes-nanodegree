@@ -1,20 +1,15 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;

@@ -44,7 +44,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/margin_big"
             android:layout_marginRight="@dimen/margin_big"
-            android:src="@mipmap/ic_reload" />
+            android:src="@mipmap/ic_reload"
+            android:contentDescription="@string/reload_image" />
 
         <TextView
             android:id="@+id/textMsgErroView"

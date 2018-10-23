@@ -8,15 +8,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.json.JSONArray;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
@@ -57,6 +54,6 @@ public class RecipeBO {
             }
         });
 
-        VolleyRequest.getInstance(context).addToRequestQueue(request);
+        VolleyRequest.getInstance().addToRequestQueue(request, context);
     }
 }

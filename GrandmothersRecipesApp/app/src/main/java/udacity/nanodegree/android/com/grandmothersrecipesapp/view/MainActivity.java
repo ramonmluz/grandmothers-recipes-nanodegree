@@ -1,15 +1,10 @@
 package udacity.nanodegree.android.com.grandmothersrecipesapp.view;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -108,12 +103,6 @@ public class MainActivity extends AppCompatActivity {
             view.setVisibility(View.VISIBLE);
         }
     }
-
-//    @Override
-//    protected void onResume() {
-//        updateRecipes();
-//        super.onResume();
-//    }
 
     @UiThread
     protected void showList(List<Recipe> recipes){

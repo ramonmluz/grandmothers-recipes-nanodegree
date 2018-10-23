@@ -8,6 +8,7 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_recipe" />
+        android:src="@drawable/ic_recipe"
+        android:contentDescription="@string/widget_image"/>
 
 </RelativeLayout>

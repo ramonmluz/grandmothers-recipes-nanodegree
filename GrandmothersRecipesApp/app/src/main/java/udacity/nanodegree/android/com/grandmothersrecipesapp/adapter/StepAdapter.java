@@ -8,7 +8,6 @@ import org.androidannotations.annotations.RootContext;
 
 import java.util.List;
 
-import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Step;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.ApiCallback;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.view.StepItemView;

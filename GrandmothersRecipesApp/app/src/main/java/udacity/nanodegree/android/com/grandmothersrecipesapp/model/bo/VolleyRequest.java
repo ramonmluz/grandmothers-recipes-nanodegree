@@ -9,29 +9,26 @@ import com.android.volley.toolbox.Volley;
 
 public class VolleyRequest {
 
-    private  static VolleyRequest instance;
-    private Context context;
+    private static VolleyRequest instance;
     private RequestQueue requestQueue;
 
-    public VolleyRequest(Context context){
-        this.context = context;
-    }
+    private VolleyRequest(){}
 
-    public static synchronized VolleyRequest getInstance(Context context) {
+    public  static synchronized VolleyRequest getInstance() {
         if(instance == null ){
-             instance = new VolleyRequest(context);
+             instance = new VolleyRequest();
         }
         return instance;
     }
 
-    public RequestQueue getRequestQueue(){
+    public RequestQueue getRequestQueue(Context context){
         if(requestQueue == null){
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> request){
-        getRequestQueue().add(request);
+    public <T> void addToRequestQueue(Request<T> request, Context context){
+        getRequestQueue(context).add(request);
     }
 }

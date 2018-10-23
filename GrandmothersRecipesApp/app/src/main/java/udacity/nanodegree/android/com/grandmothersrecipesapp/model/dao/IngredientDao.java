@@ -2,24 +2,19 @@ package udacity.nanodegree.android.com.grandmothersrecipesapp.model.dao;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import udacity.nanodegree.android.com.grandmothersrecipesapp.R;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.model.vo.Ingredient;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.provider.IngredientContract;
 import udacity.nanodegree.android.com.grandmothersrecipesapp.provider.IngredientContract.IngredientEntry;
-import udacity.nanodegree.android.com.grandmothersrecipesapp.util.Constants;
-
-import static udacity.nanodegree.android.com.grandmothersrecipesapp.provider.IngredientContract.IngredientEntry.TABLE_NAME;
 
 public class IngredientDao {
+
+    private static final String LOG_TAG = IngredientDao.class.getName();
+
     private ContentResolver contentResolver;
 
     public IngredientDao(ContentResolver contentResolver) {
@@ -47,10 +42,10 @@ public class IngredientDao {
             int result = contentResolver.bulkInsert(IngredientEntry.CONTENT_URI, contentValuesArray);
 
             if (result != 0) {
-                Log.d(TABLE_NAME, "Quantidade de linhas inseridas : " + result);
+                Log.v(LOG_TAG, "Quantidade de linhas inseridas : " + result);
             }
         } catch (Exception e) {
-            Log.e(TABLE_NAME, e.getMessage());
+            Log.e(LOG_TAG, e.getMessage());
         }
     }
 
